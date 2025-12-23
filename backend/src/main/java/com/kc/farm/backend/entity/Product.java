@@ -1,4 +1,4 @@
-package com.kc.farm.backend.record;
+package com.kc.farm.backend.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
