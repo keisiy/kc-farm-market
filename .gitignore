@@ -6,6 +6,10 @@ node_modules/
 
 # Java
 target/
+application.yml
+
+# Docker
+docker-compose.yml
 
 # Env files
 .env
