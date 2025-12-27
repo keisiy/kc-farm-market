@@ -3,10 +3,12 @@ package com.kc.farm.backend.controller;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.kc.farm.backend.entity.ProductEntity;
+import com.kc.farm.backend.entity.Product;
 import com.kc.farm.backend.repository.ProductRepository;
 
 @RestController
@@ -20,8 +22,14 @@ public class ProductController {
     }
 
 	@GetMapping
-    public List<ProductEntity> getProducts() {
+    public List<Product> getProducts() {
         return productRepository.findAll();
     }
+	
+	/* 商品登録 */
+	@PostMapping
+	public Product createProduct(@RequestBody Product product) {
+		return productRepository.save(product);
+	}
 	
 }

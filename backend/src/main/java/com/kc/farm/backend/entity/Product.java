@@ -8,7 +8,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "products")
-public class ProductEntity {
+public class Product {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,9 +17,9 @@ public class ProductEntity {
     private String name;
     private int price;
 
-    protected ProductEntity() {} // JPA用
+    protected Product() {} // JPA用
 
-    public ProductEntity(String name, int price) {
+    public Product(String name, int price) {
         this.name = name;
         this.price = price;
     }
