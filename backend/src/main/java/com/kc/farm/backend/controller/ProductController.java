@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.kc.farm.backend.record.Product;
+import com.kc.farm.backend.record.ProductResponse;
 import com.kc.farm.backend.service.ProductService;
 
 @RestController
@@ -20,7 +20,7 @@ public class ProductController {
     }
 
 	@GetMapping
-    public List<Product> getProducts() {
+    public List<ProductResponse> getProducts() {
         return productService.findAll();
     }
 	

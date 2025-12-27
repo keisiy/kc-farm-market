@@ -4,16 +4,16 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.kc.farm.backend.record.Product;
+import com.kc.farm.backend.record.ProductResponse;
 
 @Service
 public class ProductService {
 
-	public List<Product> findAll() {
+	public List<ProductResponse> findAll() {
         return List.of(
-            new Product(1L, "トマト", 300),
-            new Product(2L, "きゅうり", 200),
-            new Product(3L, "なす", 250)
+            new ProductResponse(1L, "トマト", 300),
+            new ProductResponse(2L, "きゅうり", 200),
+            new ProductResponse(3L, "なす", 250)
         );
     }
 	
