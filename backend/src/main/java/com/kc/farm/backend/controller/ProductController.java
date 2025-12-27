@@ -6,22 +6,22 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.kc.farm.backend.record.ProductResponse;
-import com.kc.farm.backend.service.ProductService;
+import com.kc.farm.backend.entity.ProductEntity;
+import com.kc.farm.backend.repository.ProductRepository;
 
 @RestController
 @RequestMapping("/api/products")
 public class ProductController {
 	
-	private final ProductService productService;
+	private final ProductRepository productRepository;
 	
-	public ProductController(ProductService productService) {
-        this.productService = productService;
+	public ProductController(ProductRepository productRepository) {
+        this.productRepository = productRepository;
     }
 
 	@GetMapping
-    public List<ProductResponse> getProducts() {
-        return productService.findAll();
+    public List<ProductEntity> getProducts() {
+        return productRepository.findAll();
     }
 	
 }
