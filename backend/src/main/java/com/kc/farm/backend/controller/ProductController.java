@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kc.farm.backend.dto.ProductCreateRequest;
+import com.kc.farm.backend.dto.ProductResponse;
 import com.kc.farm.backend.entity.Product;
 import com.kc.farm.backend.repository.ProductRepository;
 
@@ -25,8 +27,12 @@ public class ProductController {
     }
 
 	@GetMapping
-    public List<Product> getProducts() {
-        return productRepository.findAll();
+    public List<ProductResponse> getProducts() {
+		
+		return productRepository.findAll()
+				.stream()
+				.map(p -> new ProductResponse(p.getId(),p.getName(),p.getPrice()))
+				.toList();
     }
 	
 	@GetMapping("/{id}")
@@ -37,8 +43,17 @@ public class ProductController {
 	
 	/* 商品登録 */
 	@PostMapping
-	public Product createProduct(@RequestBody Product product) {
-		return productRepository.save(product);
+	public ProductResponse createProduct(@RequestBody ProductCreateRequest request) {
+		Product product = new Product(
+				null,
+				request.name(),
+				request.price());
+		Product saved = productRepository.save(product);
+		return new ProductResponse(
+				saved.getId(),
+				saved.getName(),
+				saved.getPrice()
+				);
 	}
 	
 	@PutMapping("/{id}")
@@ -47,7 +62,7 @@ public class ProductController {
 			@RequestBody Product updated
 			) {
 		Product product = productRepository.findById(id)
-				.orElseThrow(() -> new RuntimeException("Product 	not found"));
+				.orElseThrow(() -> new RuntimeException("Product not found"));
 		
 		product.setName(updated.getName());
 		product.setPrice(updated.getPrice());

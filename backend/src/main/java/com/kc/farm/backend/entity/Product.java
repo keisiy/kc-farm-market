@@ -19,7 +19,7 @@ public class Product {
 
     protected Product() {} // JPA用
 
-    public Product(String name, int price) {
+    public Product(Long id, String name, int price) {
         this.name = name;
         this.price = price;
     }
