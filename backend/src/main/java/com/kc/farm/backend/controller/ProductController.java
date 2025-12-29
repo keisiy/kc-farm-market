@@ -14,55 +14,34 @@ import org.springframework.web.bind.annotation.RestController;
 import com.kc.farm.backend.dto.ProductCreateRequest;
 import com.kc.farm.backend.dto.ProductResponse;
 import com.kc.farm.backend.dto.ProductUpdateRequest;
-import com.kc.farm.backend.entity.Product;
-import com.kc.farm.backend.repository.ProductRepository;
+import com.kc.farm.backend.service.ProductService;
 
 @RestController
 @RequestMapping("/api/products")
 public class ProductController {
 	
-	private final ProductRepository productRepository;
+	private final ProductService productService;
 	
-	public ProductController(ProductRepository productRepository) {
-        this.productRepository = productRepository;
+	/* ここでProductServiceImplが注入される */
+	public ProductController(ProductService productService) {
+        this.productService = productService;
     }
 
 	@GetMapping
     public List<ProductResponse> getProducts() {
-		
-		return productRepository.findAll()
-				.stream()
-				.map(p -> new ProductResponse(p.getId(),p.getName(),p.getPrice()))
-				.toList();
+		return productService.findAll();
     }
 	
 	@GetMapping("/{id}")
 	public ProductResponse getProductById(@PathVariable Long id) {
 		/* リクエストされたProductを取得 */
-		Product findedProduct = productRepository.findById(id)
-				.orElseThrow(() -> new RuntimeException("Product not found"));
-		
-		/* Entity→DTO */
-		return new ProductResponse(
-					findedProduct.getId(),
-					findedProduct.getName(),
-					findedProduct.getPrice()
-				);
+		return productService.findById(id);
 	}
 	
 	/* 商品登録 */
 	@PostMapping
 	public ProductResponse createProduct(@RequestBody ProductCreateRequest request) {
-		Product product = new Product(
-				null,
-				request.name(),
-				request.price());
-		Product saved = productRepository.save(product);
-		return new ProductResponse(
-				saved.getId(),
-				saved.getName(),
-				saved.getPrice()
-				);
+		return productService.create(request);
 	}
 	
 	@PutMapping("/{id}")
@@ -70,25 +49,12 @@ public class ProductController {
 			@PathVariable Long id,
 			@RequestBody ProductUpdateRequest updated
 			) {
-		/* リクエストのproductを取得 */
-		Product product = productRepository.findById(id)
-				.orElseThrow(() -> new RuntimeException("Product not found"));
-		/* Entity→DTO */
-		product.setName(updated.name());
-		product.setPrice(updated.price());
-		
-		Product saved = productRepository.save(product);
-		
-		return new ProductResponse(
-				saved.getId(),
-				saved.getName(),
-				saved.getPrice()
-				);
+		return productService.update(id, updated);
 	}
 	
 	@DeleteMapping("/{id}")
 	public void delete(@PathVariable Long id) {
-		productRepository.deleteById(id);
+		productService.delete(id);
 	}
 	
 }

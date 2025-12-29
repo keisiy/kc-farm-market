@@ -2,6 +2,8 @@ package com.kc.farm.backend.service;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.kc.farm.backend.dto.ProductCreateRequest;
 import com.kc.farm.backend.dto.ProductResponse;
 import com.kc.farm.backend.dto.ProductUpdateRequest;
@@ -9,6 +11,7 @@ import com.kc.farm.backend.entity.Product;
 import com.kc.farm.backend.repository.ProductRepository;
 
 /** ProductRepositoryの各種メソッドを実行する */
+@Service
 public class ProductServiceImpl implements ProductService {
 	ProductRepository productRepository;
 	
