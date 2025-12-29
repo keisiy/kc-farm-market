@@ -4,17 +4,22 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.kc.farm.backend.record.ProductResponse;
+import com.kc.farm.backend.dto.ProductCreateRequest;
+import com.kc.farm.backend.dto.ProductResponse;
+import com.kc.farm.backend.dto.ProductUpdateRequest;
 
+/** Controllerがよぶ窓口 */
 @Service
-public class ProductService {
+public interface ProductService {
 
-	public List<ProductResponse> findAll() {
-        return List.of(
-            new ProductResponse(1L, "トマト", 300),
-            new ProductResponse(2L, "きゅうり", 200),
-            new ProductResponse(3L, "なす", 250)
-        );
-    }
+	List<ProductResponse> findAll();
+	
+	ProductResponse findById(Long id);
+	
+	ProductResponse create(ProductCreateRequest request);
+	
+	ProductResponse update(Long id, ProductUpdateRequest request);
+	
+	void delete(Long id);
 	
 }

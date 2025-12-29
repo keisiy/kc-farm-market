@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.kc.farm.backend.dto.ProductCreateRequest;
 import com.kc.farm.backend.dto.ProductResponse;
+import com.kc.farm.backend.dto.ProductUpdateRequest;
 import com.kc.farm.backend.entity.Product;
 import com.kc.farm.backend.repository.ProductRepository;
 
@@ -36,9 +37,17 @@ public class ProductController {
     }
 	
 	@GetMapping("/{id}")
-	public Product getById(@PathVariable Long id) {
-		return productRepository.findById(id)
+	public ProductResponse getProductById(@PathVariable Long id) {
+		/* リクエストされたProductを取得 */
+		Product findedProduct = productRepository.findById(id)
 				.orElseThrow(() -> new RuntimeException("Product not found"));
+		
+		/* Entity→DTO */
+		return new ProductResponse(
+					findedProduct.getId(),
+					findedProduct.getName(),
+					findedProduct.getPrice()
+				);
 	}
 	
 	/* 商品登録 */
@@ -57,17 +66,24 @@ public class ProductController {
 	}
 	
 	@PutMapping("/{id}")
-	public Product update(
+	public ProductResponse updateProduct(
 			@PathVariable Long id,
-			@RequestBody Product updated
+			@RequestBody ProductUpdateRequest updated
 			) {
+		/* リクエストのproductを取得 */
 		Product product = productRepository.findById(id)
 				.orElseThrow(() -> new RuntimeException("Product not found"));
+		/* Entity→DTO */
+		product.setName(updated.name());
+		product.setPrice(updated.price());
 		
-		product.setName(updated.getName());
-		product.setPrice(updated.getPrice());
+		Product saved = productRepository.save(product);
 		
-		return productRepository.save(product);
+		return new ProductResponse(
+				saved.getId(),
+				saved.getName(),
+				saved.getPrice()
+				);
 	}
 	
 	@DeleteMapping("/{id}")
