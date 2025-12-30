@@ -8,6 +8,7 @@ import com.kc.farm.backend.dto.ProductCreateRequest;
 import com.kc.farm.backend.dto.ProductResponse;
 import com.kc.farm.backend.dto.ProductUpdateRequest;
 import com.kc.farm.backend.entity.Product;
+import com.kc.farm.backend.exception.ProductNotFoundException;
 import com.kc.farm.backend.repository.ProductRepository;
 
 /** ProductRepositoryの各種メソッドを実行する */
@@ -30,7 +31,7 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public ProductResponse findById(Long id) {
 		Product product = productRepository.findById(id)
-			.orElseThrow(() -> new RuntimeException("not found Product"));
+			.orElseThrow(() -> new ProductNotFoundException(id));
 		
 		return ProductResponse.from(product);
 	}
@@ -49,7 +50,7 @@ public class ProductServiceImpl implements ProductService {
 	public ProductResponse update(Long id, ProductUpdateRequest request) {
 		/* リクエストのproductを取得 */
 		Product product = productRepository.findById(id)
-				.orElseThrow(() -> new RuntimeException("Product not found"));
+				.orElseThrow(() -> new ProductNotFoundException(id));
 		/* Entity→DTO */
 		product.setName(request.name());
 		product.setPrice(request.price());
