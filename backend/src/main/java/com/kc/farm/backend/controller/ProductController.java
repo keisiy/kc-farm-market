@@ -2,6 +2,8 @@ package com.kc.farm.backend.controller;
 
 import java.util.List;
 
+import jakarta.validation.Valid;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -40,7 +42,7 @@ public class ProductController {
 	
 	/* 商品登録 */
 	@PostMapping
-	public ProductResponse createProduct(@RequestBody ProductCreateRequest request) {
+	public ProductResponse createProduct(@RequestBody @Valid ProductCreateRequest request) {
 		return productService.create(request);
 	}
 	
