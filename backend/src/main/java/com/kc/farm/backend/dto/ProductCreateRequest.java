@@ -3,6 +3,7 @@ package com.kc.farm.backend.dto;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 
+/** 登録用DTO */
 public record ProductCreateRequest(
 		
 		/* idは不要。DBが採番 */

@@ -2,7 +2,7 @@ package com.kc.farm.backend.dto;
 
 import com.kc.farm.backend.entity.Product;
 
-/** 返却用 */
+/** 返却用DTO */
 public record ProductResponse(
 		Long id,
 		String name,
