@@ -6,10 +6,10 @@ import java.util.List;
 /** エラー情報を受け取りフロントへ返却するクラス */
 public record ErrorResponse(
 			/* コード */
-			String name,
-			/* メッセージ */
+			String code,
+			/* 共通メッセージ */
 			String message,
-			/* 詳細 */
+			/* 詳細 フィールドごとに保持 */
 			List<FieldError> errors,
 			/* 時刻 */
 			LocalDateTime timestamp
