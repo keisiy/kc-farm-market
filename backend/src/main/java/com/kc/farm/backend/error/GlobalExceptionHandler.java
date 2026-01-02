@@ -2,11 +2,10 @@ package com.kc.farm.backend.error;
 
 import java.util.List;
 
-import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.kc.farm.backend.exception.ProductNotFoundException;
@@ -19,25 +18,27 @@ public class GlobalExceptionHandler {
      * 商品が存在しない
      * ========================= */
 	@ExceptionHandler(ProductNotFoundException.class)
-	@ResponseStatus(HttpStatus.NOT_FOUND)
-	public ErrorResponse handleProductNotFound(
+	public ResponseEntity<ErrorResponse> handleProductNotFound(
 			ProductNotFoundException ex
 		) {
+		/* エラーコードを取得 */
+		ErrorCode errorCode = ex.getErrorCode();
+		
 		/* エラー用DTOを生成 */
-		return new ErrorResponse(
-				ex.getMessage(),
-				List.of()
-		);
+		return ResponseEntity.status(errorCode.status())
+				.body(ErrorResponse.of(errorCode));
 	}
 	
 	/* =========================
      * Validationエラー
      * ========================= */
 	@ExceptionHandler(MethodArgumentNotValidException.class)
-	@ResponseStatus(HttpStatus.BAD_REQUEST)
-	public ErrorResponse handleValidationError(
+	public ResponseEntity<ErrorResponse> handleValidationError(
 			MethodArgumentNotValidException ex
 		){
+		/* エラーコードを取得 */
+		ErrorCode errorCode = ErrorCode.PRODUCT_VALIDATION_ERROR;
+		
 		BindingResult result = ex.getBindingResult();
 		
 		List<FieldError> errors = result.getFieldErrors().stream()
@@ -47,6 +48,7 @@ public class GlobalExceptionHandler {
 					)
 				.toList();
 		
-		return new ErrorResponse("validation error", errors);
+		return ResponseEntity.status(errorCode.status())
+				.body(ErrorResponse.of(errorCode, errors));
 	}
 }
