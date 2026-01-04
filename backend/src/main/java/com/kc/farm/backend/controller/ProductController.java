@@ -21,7 +21,7 @@ import com.kc.farm.backend.service.ProductService;
 
 @RestController
 @RequestMapping("/api/products")
-@CrossOrigin(origins = "*")// 学習用・本番では使用しない！
+@CrossOrigin(origins = "http://localhost:3000")
 public class ProductController {
 	
 	private final ProductService productService;

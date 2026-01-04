@@ -1,14 +1,47 @@
-export default function Home() {
-  return (
-    <main className="p-10">
-      <h1 className="text-4xl font-bold">
-        KC Farm Market
-      </h1>
+"use client";
 
-      <p className="mt-4 text-lg">
-        有機農家から直接届く、新鮮な農作物をあなたの食卓へ。
-      </p>
+import { useEffect, useState } from "react";
+
+type Product = {
+  id: number;
+  name: string;
+  price: number;
+};
+
+export default function Home() {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    fetch("http://localhost:8080/api/products")
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("APIエラー");
+        }
+        return res.json();
+      })
+      .then((data: Product[]) => {
+        setProducts(data);
+      })
+      .catch((err) => {
+        setError(err.message);
+      });
+  }, []);
+
+  if (error) {
+    return <p style={{ color: "red" }}>エラー: {error}</p>;
+  }
+
+  return (
+    <main>
+      <h1>商品一覧</h1>
+      <ul>
+        {products.map((p) => (
+          <li key={p.id}>
+            {p.name}：{p.price}円
+          </li>
+        ))}
+      </ul>
     </main>
   );
 }
-
