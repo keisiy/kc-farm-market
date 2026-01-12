@@ -2,14 +2,21 @@
 
 import { useState } from "react";
 import { createProduct } from "@/lib/api/product";
+import {Product} from "@/types/product";
 
-export default function ProductForm() {
+type Props = {
+    onCreated: (product: Product) => void;
+};
+
+export default function ProductForm({ onCreated }: Props) {
     const [name, setName] = useState("");
     const [price, setPrice] = useState(0);
 
     const handleSubmit = async () => {
-        await createProduct({ name, price });
-        alert("登録完了");
+        const created = await createProduct({ name, price });
+
+        /** 親へ通知 */
+        onCreated(created);
     };
 
     return (

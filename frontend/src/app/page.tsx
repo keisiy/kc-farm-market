@@ -1,13 +1,24 @@
+"use client"
 
+import { useEffect, useState } from "react";
 import { fetchProducts } from "@/lib/api/product";
 import ProductForm from "./ProductForm";
+import {Product} from "@/types/product";
 
-export default async function Page() {
-  const products = await fetchProducts();
+export default function Page() {
+  const [products, setProducts] = useState<Product[]>([])
+
+  useEffect(() => {
+    fetchProducts().then(setProducts);
+  }, []);
 
   return (
     <>
-      <ProductForm />
+      <ProductForm
+        onCreated={(product) => 
+          setProducts(prev => [...prev, product])
+        }
+      />
 
       <ul>
       {products.map(p => (
