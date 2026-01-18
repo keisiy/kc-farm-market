@@ -6,8 +6,9 @@ export type FieldError = {
   message: string;
 };
 
-export type ErrorResponse = {
+export type ApiErrorResponse = {
   code: string;
   message: string;
-  errors?: FieldError[];
+  /** errorsは省略可能プロパティ */
+  errors?: FieldError[];/** FieldError[] | undefined　となる */
 };

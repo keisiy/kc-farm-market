@@ -19,8 +19,9 @@ export async function createProduct(
     });
 
     if(!response.ok) {
-        throw new Error("商品登録に失敗しました");
-    }
+        const errorJson = await response.json();
+        throw errorJson;
+    } 
 
     return response.json();
 }

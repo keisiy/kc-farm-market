@@ -6,7 +6,8 @@ import ProductForm from "./ProductForm";
 import {Product} from "@/types/product";
 
 export default function Page() {
-  const [products, setProducts] = useState<Product[]>([])
+  const [products, setProducts] = useState<Product[]>([]);
+  
 
   useEffect(() => {
     fetchProducts().then(setProducts);
