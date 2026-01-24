@@ -1,0 +1,10 @@
+.form-row{
+    display: flex;
+    gap: 1rem;
+}
+
+.form-field{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
