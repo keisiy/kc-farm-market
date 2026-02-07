@@ -8,6 +8,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import com.kc.farm.backend.exception.DuplicateEmailException;
 import com.kc.farm.backend.exception.ProductNotFoundException;
 
 /** 例外情報作成を担うクラス */
@@ -30,6 +31,21 @@ public class GlobalExceptionHandler {
 	}
 	
 	/* =========================
+     * メール重複エラー
+     * ========================= */
+	@ExceptionHandler(DuplicateEmailException.class)
+	public ResponseEntity<ErrorResponse> handleDuplicateEmail(
+			DuplicateEmailException ex
+		) {
+		/* エラーコードを取得 */
+		ErrorCode errorCode = ex.getErrorCode();
+		
+		/* エラー用DTOを生成 */
+		return ResponseEntity.status(errorCode.status())
+				.body(ErrorResponse.of(errorCode));
+	}
+	
+	/* =========================
      * Validationエラー
      * ========================= */
 	@ExceptionHandler(MethodArgumentNotValidException.class)
@@ -37,7 +53,7 @@ public class GlobalExceptionHandler {
 			MethodArgumentNotValidException ex
 		){
 		/* エラーコードを取得 */
-		ErrorCode errorCode = ErrorCode.PRODUCT_VALIDATION_ERROR;
+		ErrorCode errorCode = ErrorCode.VALIDATION_ERROR;
 		
 		BindingResult result = ex.getBindingResult();
 		

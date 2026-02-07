@@ -3,12 +3,17 @@ package com.kc.farm.backend.dto;
 import java.time.LocalDateTime;
 import java.util.Map;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
 /** バリデーション用DTO */
-public record ValidationErrorResponse(
-		int status,
-		String error,
-		String message,
-		Map<String, String> details,
-		String path,
-		LocalDateTime timestamp
-) {}
+@Getter
+@AllArgsConstructor
+public class ValidationErrorResponse {
+	private int status;
+	private String error;
+	private String message;
+	private Map<String, String> details;
+	private String path;
+	private LocalDateTime timestamp;
+}

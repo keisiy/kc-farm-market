@@ -9,8 +9,12 @@ public enum ErrorCode {
 	PRODUCT_NOT_FOUND(HttpStatus.NOT_FOUND, "P-001", "商品が見つかりません"),
     PRODUCT_VALIDATION_ERROR(HttpStatus.BAD_REQUEST, "P-002", "商品入力値が不正です"),
 	
+    /* === User === */
+    MAIL_DUPLICATION_ERROR(HttpStatus.BAD_REQUEST, "U-001", "メールは登録済みです"),
+    
 	/* === Common === */
-    INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "C-001", "サーバーエラーが発生しました");
+    INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "C-001", "サーバーエラーが発生しました"),
+	VALIDATION_ERROR(HttpStatus.BAD_REQUEST, "C-002", "入力値が不正です");
 
     /* === フィールド === */ 
     private final HttpStatus status;

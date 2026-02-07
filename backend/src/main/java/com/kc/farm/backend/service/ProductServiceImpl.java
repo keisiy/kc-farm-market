@@ -40,8 +40,8 @@ public class ProductServiceImpl implements ProductService {
 	public ProductResponse create(ProductCreateRequest request) {
 		Product product = new Product(
 				null,
-				request.name(),
-				request.price());
+				request.getName(),
+				request.getPrice());
 		Product saved = productRepository.save(product);
 		return ProductResponse.from(saved);
 	}
@@ -52,8 +52,8 @@ public class ProductServiceImpl implements ProductService {
 		Product product = productRepository.findById(id)
 				.orElseThrow(() -> new ProductNotFoundException(id));
 		/* Entity→DTO */
-		product.setName(request.name());
-		product.setPrice(request.price());
+		product.setName(request.getName());
+		product.setPrice(request.getPrice());
 		
 		/* 実行 */
 		Product saved = productRepository.save(product);

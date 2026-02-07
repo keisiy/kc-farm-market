@@ -5,6 +5,7 @@ import com.kc.farm.backend.error.ErrorCode;
 /** リクエストの商品が存在しないことを表す例外クラス */
 public class ProductNotFoundException extends RuntimeException {
 	
+	/* レスポンス用エラーコード */
 	private final ErrorCode errorCode;
 
 	public ProductNotFoundException(Long id) {
