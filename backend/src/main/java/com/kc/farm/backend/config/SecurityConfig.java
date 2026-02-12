@@ -20,10 +20,13 @@ public class SecurityConfig {
 		http
 			.csrf(csrf -> csrf.disable())
 			.authorizeHttpRequests(auth -> auth
+					/* 以下のパターンのURLは誰でもアクセス可能とする */
 					.requestMatchers("/api/**").permitAll()
 					.anyRequest().authenticated()
 			)
+			/* フォームログイン認証（ログイン画面）を無効化 */
 			.formLogin(form -> form.disable())
+			/* HTTP基本認証を無効化 */
 			.httpBasic(basic -> basic.disable());
 		
 		return http.build();
