@@ -19,6 +19,9 @@ public class UserCreateRequest {
 	@Email(message = "email format is invalid") // email形式チェック
 	private String email;
 	
+	@NotBlank(message = "name is required") // ブランクNG
+	private String name;
+	
 	@NotBlank(message = "password is required")
 	private String password;
 }

@@ -42,6 +42,7 @@ public class UserServiceImpl implements UserService {
 		
 		/* Entity作成 */
 		User user = new User();
+		user.setName(request.getName());
 		user.setEmail(request.getEmail());
 		user.setPassword(encryptedPass);
 		user.onCreated();
