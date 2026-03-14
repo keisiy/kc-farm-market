@@ -40,9 +40,11 @@ public class GlobalExceptionHandler {
 		/* エラーコードを取得 */
 		ErrorCode errorCode = ex.getErrorCode();
 		
+		List<FieldError> errors = List.of(new FieldError(ex.getField(), ex.getMessage()));
+		
 		/* エラー用DTOを生成 */
 		return ResponseEntity.status(errorCode.status())
-				.body(ErrorResponse.of(errorCode));
+				.body(ErrorResponse.of(errorCode, errors));
 	}
 	
 	/* =========================

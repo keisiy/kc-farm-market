@@ -10,6 +10,7 @@ type ProductCreateRequest = {
 export async function createProduct(
     request: ProductCreateRequest
 ): Promise<Product> {
+    /** fetchした結果返るのは、Responseオブジェクト */
     const response = await fetch("http://localhost:8080/api/products", {
         method: "POST",
         headers: {
@@ -19,6 +20,7 @@ export async function createProduct(
     });
 
     if(!response.ok) {
+        /** response.json()で、javaScriptオブジェクトに変換している */
         const errorJson = await response.json();
         throw errorJson;
     } 

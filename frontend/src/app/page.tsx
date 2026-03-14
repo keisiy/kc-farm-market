@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { fetchProducts } from "@/lib/api/product";
-import ProductForm from "./ProductForm";
+import ProductForm from "./components/ProductForm";
 import {Product} from "@/types/product";
 
 export default function Page() {

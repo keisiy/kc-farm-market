@@ -53,6 +53,7 @@ public class UserServiceImpl implements UserService {
 		/* Response作成 */
 		return new UserResponse(
 				saved.getId(),
+				saved.getName(),
 				saved.getEmail(),
 				saved.getCreatedAt()
 			);

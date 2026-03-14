@@ -11,10 +11,10 @@ import { FieldError } from "@/types/error";
 import { ApiErrorResponse } from "@/types/error";
 
 type Props = {
-    onCreated: (product: Product) => void;
+    onCreated: (product: Product) => void; // プロパティ　関数
 };
 
-export default function ProductForm({ onCreated }: Props) {
+export default function ProductForm({ onCreated }: Props) { // Props型から、{onCreated}だけ取り出す
     const [name, setName] = useState("");
     const [price, setPrice] = useState(0);
     const [errors, setErrors] = useState<FieldError[]>([]);
@@ -25,7 +25,7 @@ export default function ProductForm({ onCreated }: Props) {
             /** 成功時はエラーをリセット */
             setErrors([]);
 
-            /** 親へ通知 */
+            /** 親へProductが作られたことを通知 通知する手段として関数呼び出し*/
             onCreated(created);
         } catch (err: unknown) {
             if (err instanceof Error) {
