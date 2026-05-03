@@ -18,6 +18,9 @@ export default function LoginForm() {
             );
 
             if (res.ok) {
+                const token = await res.text();
+                localStorage.setItem("token", token);
+                console.log(localStorage.getItem("token"));
                 alert("ログイン成功");
             } else {
                 alert("ログイン失敗");

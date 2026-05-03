@@ -8,15 +8,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kc.farm.backend.dto.AuthRequest;
+import com.kc.farm.backend.security.JwtUtil;
 
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
 
 	private final AuthenticationManager authenticationManager; 
+	private final JwtUtil jwtUtil;
 	
-	public AuthController(AuthenticationManager authenticationManager) {
+	public AuthController(AuthenticationManager authenticationManager,
+			JwtUtil jwtUtil) {
 		this.authenticationManager = authenticationManager;
+		this.jwtUtil = jwtUtil;
 	}
 	
 	@PostMapping("/login")
@@ -29,7 +33,11 @@ public class AuthController {
 		
 		authenticationManager.authenticate(authToken);
 		
-		return "ログイン成功";
+		// JWT発行
+		String token = jwtUtil.generateToken(request.getEmail());
+		
+		// JWT返却
+		return token;
 	}
 	
 }

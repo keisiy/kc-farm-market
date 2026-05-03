@@ -10,25 +10,15 @@ type ProductCreateRequest = {
 export async function createProduct(
     request: ProductCreateRequest
 ): Promise<Product> {
-    /** fetchした結果返るのは、Responseオブジェクト */
-    const response = await fetch("http://localhost:8080/api/products", {
+    
+
+    return apiFetch<Product>("/api/products", {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
         body: JSON.stringify(request),
     });
-
-    if(!response.ok) {
-        /** response.json()で、javaScriptオブジェクトに変換している */
-        const errorJson = await response.json();
-        throw errorJson;
-    } 
-
-    return response.json();
 }
 
 /** GET用API */
 export function fetchProducts(): Promise<Product[]> {
-    return apiFetch<Product[]>("/products");
+    return apiFetch<Product[]>("/api/products");
 }
